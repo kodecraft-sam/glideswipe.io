@@ -155,11 +155,14 @@
                             const result = await response.json();
                             if (response.ok) {
                               document.querySelector('.sent-message').style.display = 'block';
+                              document.querySelector('.error-message').style.display = 'none';
                             } else {
                               document.querySelector('.error-message').textContent = result.error;
+                              document.querySelector('.sent-message').style.display = 'none';
                             }
                           } catch (error) {
                             document.querySelector('.error-message').textContent = 'An error occurred. Please try again.';
+                            document.querySelector('.sent-message').style.display = 'none';
                           }
                         });
                       </script>

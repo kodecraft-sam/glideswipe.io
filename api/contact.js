@@ -3,7 +3,6 @@ import Mailgun from 'mailgun.js';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    console.log("Pumasok: req.method: ", req.method);
     const { name, email, subject, message } = req.body;
 
     // Mailgun config
@@ -20,19 +19,19 @@ export default async function handler(req, res) {
       text: `${message}\n\nContact Email: ${email}`,
     };
 
-    // try {
-    //   // Send the email using Mailgun
-    //   await mg.messages.create(process.env.MAILGUN_DOMAIN, data);
-    //   res.status(200).json({ message: 'Email sent successfully!' });
-    // } catch (error) {
-    //   res.status(500).json({ error: 'Error sending email' });
-    // }
     try {
-        const response = await mg.messages.create(process.env.MAILGUN_DOMAIN, data);
-        res.status(200).json({ message: 'Email sent successfully!', response });
+      // Send the email using Mailgun
+      await mg.messages.create(process.env.MAILGUN_DOMAIN, data);
+      res.status(200).json({ message: 'Email sent successfully!' });
     } catch (error) {
-        res.status(500).json({ error: error.message || 'Error sending email:', details: error });
+      res.status(500).json({ error: 'Error sending email' });
     }
+    // try {
+    //     const response = await mg.messages.create(process.env.MAILGUN_DOMAIN, data);
+    //     res.status(200).json({ message: 'Email sent successfully!', response });
+    // } catch (error) {
+    //     res.status(500).json({ error: error.message || 'Error sending email', details: error });
+    // }
   } else {
     res.status(405).json({ error: 'Method Not Allowed' });
   }
