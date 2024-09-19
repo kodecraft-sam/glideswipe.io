@@ -2,6 +2,7 @@ import formData from 'form-data';
 import Mailgun from 'mailgun.js';
 
 export default async function handler(req, res) {
+    console.log("Pumasok: req.method: ", req.method);
   if (req.method === 'POST') {
     const { name, email, subject, message } = req.body;
 
