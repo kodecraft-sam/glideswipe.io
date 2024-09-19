@@ -103,7 +103,7 @@
                     </div>
 
                     <div class="col-lg-6">
-                        <form action="mailto:info@glideswipe.com" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="500">
+                        <form id="contactForm" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="500">
                             <div class="row gy-4">
 
                                 <div class="col-md-6">
@@ -134,6 +134,35 @@
                         </form>
                     </div><!-- End Contact Form -->
 
+                    <script>
+                        const form = document.getElementById('contactForm');
+                      
+                        form.addEventListener('submit', async (e) => {
+                          e.preventDefault();
+                          
+                          const formData = new FormData(form);
+                          const data = Object.fromEntries(formData.entries());
+                      
+                          try {
+                            const response = await fetch('/api/contact', {
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json'
+                              },
+                              body: JSON.stringify(data)
+                            });
+                      
+                            const result = await response.json();
+                            if (response.ok) {
+                              document.querySelector('.sent-message').style.display = 'block';
+                            } else {
+                              document.querySelector('.error-message').textContent = result.error;
+                            }
+                          } catch (error) {
+                            document.querySelector('.error-message').textContent = 'An error occurred. Please try again.';
+                          }
+                        });
+                      </script>
                 </div>
 
             </div>
